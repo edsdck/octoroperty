@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Octo.Core.Entities;
 
 namespace Octo.Infrastructure.Data
 {
-    public class OctoContext : DbContext
+    public class OctoContext : IdentityDbContext<OctoUser>
     {
         public OctoContext(DbContextOptions<OctoContext> options) : base(options)
         {
@@ -16,7 +16,5 @@ namespace Octo.Infrastructure.Data
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
-
-        public DbSet<User> Users { get; set; }
     }
 }
