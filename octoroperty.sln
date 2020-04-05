@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octo.Web", "Octo.Web\Octo.W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octo.Infrastructure", "Octo.Infrastructure\Octo.Infrastructure.csproj", "{9D0BC37B-8AE0-41A6-9794-0979D1504923}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octo.Core", "Octo.Core\Octo.Core.csproj", "{AEAE0711-004A-4269-8504-FAA20ECF8FA5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{9D0BC37B-8AE0-41A6-9794-0979D1504923}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D0BC37B-8AE0-41A6-9794-0979D1504923}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D0BC37B-8AE0-41A6-9794-0979D1504923}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEAE0711-004A-4269-8504-FAA20ECF8FA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEAE0711-004A-4269-8504-FAA20ECF8FA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEAE0711-004A-4269-8504-FAA20ECF8FA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEAE0711-004A-4269-8504-FAA20ECF8FA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
