@@ -2,7 +2,7 @@
 
 namespace Octo.Web.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]/")]
     [ApiController]
     public class DefaultController : ControllerBase
     {

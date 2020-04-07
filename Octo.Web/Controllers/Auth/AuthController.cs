@@ -1,31 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
+using Octo.Core.Factories;
 using Octo.Infrastructure.Data;
+using Octo.Web.Filters;
 
 namespace Octo.Web.Controllers.Auth
 {
     public class AuthController : DefaultController
     {
         private readonly UserManager<OctoUser> _userManager;
+        private readonly IJwtFactory _jwtFactory;
 
-        public AuthController(UserManager<OctoUser> userManager)
+        public AuthController(UserManager<OctoUser> userManager,
+            IJwtFactory jwtFactory)
         {
             _userManager = userManager;
+            _jwtFactory = jwtFactory;
         }
         
-        [HttpPost]
-        [AllowAnonymous]
-        public async Task<IActionResult> Register(RegisterModel registerModel)
+        [HttpPost("Register"), AllowAnonymous]
+        [ValidateModel]
+        public async Task<IActionResult> Register(BaseLoginModel registerInfo)
         {
             var result = await _userManager.CreateAsync(
-                new OctoUser { UserName = registerModel.Username }, registerModel.Password);
+                new OctoUser { UserName = registerInfo.Username }, registerInfo.Password );
 
             if (result.Succeeded)
             {
@@ -35,34 +35,21 @@ namespace Octo.Web.Controllers.Auth
             return BadRequest(result.Errors);
         }
         
-        [HttpPost]
-        public async Task<IActionResult> GenerateToken(RegisterModel loginInfo)
+        [HttpPost("Login"), AllowAnonymous]
+        [ValidateModel]
+        public async Task<IActionResult> Login(BaseLoginModel loginInfo)
         {
             var user = await _userManager.FindByNameAsync(loginInfo.Username);
-            if (user == null || !await _userManager.CheckPasswordAsync(user, loginInfo.Password))
+            var isCorrectCredentials = await _userManager.CheckPasswordAsync(user, loginInfo.Password);
+            
+            if (!isCorrectCredentials)
             {
                 return Unauthorized();
             }
 
-            var claims = new List<Claim>();
+            var jwtToken = _jwtFactory.GenerateJwtToken();
 
-            var key = new SymmetricSecurityKey(Convert.FromBase64String("cmFuZG9tcmFuZG9tcmFuZG9t"));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var token = new JwtSecurityToken(
-                issuer: "api",
-                audience: "api",
-                claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: creds
-            );
-
-            var t = new JwtSecurityTokenHandler();
-            var to = t.WriteToken(token);
-            
-            return Ok(new
-            {
-                token = to
-            });
+            return Ok(jwtToken);
         }
     }
 }

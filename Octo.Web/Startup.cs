@@ -1,6 +1,4 @@
-using System;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Octo.Core;
+using Octo.Core.Factories;
 using Octo.Infrastructure.Data;
 
 namespace Octo.Web
@@ -24,7 +24,14 @@ namespace Octo.Web
         
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentityCore<OctoUser>()
+            services.AddIdentityCore<OctoUser>(options =>
+                {
+                    options.Password.RequireDigit = false;
+                    options.Password.RequiredLength = 8;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                })
                 .AddEntityFrameworkStores<OctoContext>();
 
             services.AddDbContext<OctoContext>(options =>
@@ -33,16 +40,19 @@ namespace Octo.Web
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
+                    var identityOptions = Configuration.GetSection("IdentityOptions");
                     options.TokenValidationParameters.ValidateIssuer = true;
-                    options.TokenValidationParameters.ValidateAudience = true;
+                    options.TokenValidationParameters.ValidateAudience = false;
                     options.TokenValidationParameters.ValidateLifetime = true;
                     options.TokenValidationParameters.ValidateIssuerSigningKey = true;
-                    options.TokenValidationParameters.ValidIssuer = "api";
-                    options.TokenValidationParameters.ValidAudience = "api";
+                    options.TokenValidationParameters.ValidIssuer = identityOptions["Issuer"];
                     options.TokenValidationParameters.IssuerSigningKey = 
-                        new SymmetricSecurityKey(Convert.FromBase64String("cmFuZG9tcmFuZG9tcmFuZG9t"));
+                        new SymmetricSecurityKey(Encoding.ASCII.GetBytes(identityOptions["Secret"]));
                 });
             
+            services.Configure<IdentitySettings>(Configuration.GetSection("IdentityOptions"));
+            services.AddScoped<IJwtFactory, JwtFactory>();
+
             services.AddControllers();
         }
 
