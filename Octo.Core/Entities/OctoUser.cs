@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Octo.Infrastructure.Data
+namespace Octo.Core.Entities
 {
     public class OctoUser : IdentityUser
     {

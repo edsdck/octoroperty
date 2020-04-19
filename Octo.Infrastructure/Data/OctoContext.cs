@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Octo.Core.Entities;
 
 namespace Octo.Infrastructure.Data
 {
@@ -16,5 +17,7 @@ namespace Octo.Infrastructure.Data
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
+
+        public DbSet<Accommodation> Accommodations { get; set; }
     }
 }

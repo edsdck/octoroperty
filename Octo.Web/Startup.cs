@@ -2,12 +2,14 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Octo.Core;
+using Octo.Core.Entities;
 using Octo.Core.Factories;
 using Octo.Infrastructure.Data;
 
@@ -24,7 +26,8 @@ namespace Octo.Web
         
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentityCore<OctoUser>(options =>
+            /*services
+                .AddIdentityCore<OctoUser>(options =>
                 {
                     options.Password.RequireDigit = false;
                     options.Password.RequiredLength = 8;
@@ -35,7 +38,7 @@ namespace Octo.Web
                 .AddEntityFrameworkStores<OctoContext>();
 
             services.AddDbContext<OctoContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));*/
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -68,7 +71,11 @@ namespace Octo.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => endpoints.MapControllers());
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapGet("/", context => context.Response.WriteAsync("hey your API works"));
+                endpoints.MapControllers();
+            });
         }
     }
 }

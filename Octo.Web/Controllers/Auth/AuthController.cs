@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Octo.Core.Entities;
 using Octo.Core.Factories;
 using Octo.Infrastructure.Data;
 using Octo.Web.Filters;
@@ -22,7 +23,7 @@ namespace Octo.Web.Controllers.Auth
         
         [HttpPost("Register"), AllowAnonymous]
         [ValidateModel]
-        public async Task<IActionResult> Register(BaseLoginModel registerInfo)
+        public async Task<IActionResult> Register(RegisterRequestModel registerInfo)
         {
             var result = await _userManager.CreateAsync(
                 new OctoUser { UserName = registerInfo.Username }, registerInfo.Password );
@@ -31,16 +32,16 @@ namespace Octo.Web.Controllers.Auth
             {
                 return Accepted();
             }
-
+            
             return BadRequest(result.Errors);
         }
         
         [HttpPost("Login"), AllowAnonymous]
         [ValidateModel]
-        public async Task<IActionResult> Login(BaseLoginModel loginInfo)
+        public async Task<IActionResult> Login(LoginRequestModel loginRequestInfo)
         {
-            var user = await _userManager.FindByNameAsync(loginInfo.Username);
-            var isCorrectCredentials = await _userManager.CheckPasswordAsync(user, loginInfo.Password);
+            var user = await _userManager.FindByNameAsync(loginRequestInfo.Username);
+            var isCorrectCredentials = await _userManager.CheckPasswordAsync(user, loginRequestInfo.Password);
             
             if (!isCorrectCredentials)
             {

@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octo.Infrastructure", "Octo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octo.Core", "Octo.Core\Octo.Core.csproj", "{AEAE0711-004A-4269-8504-FAA20ECF8FA5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octo.SharedKernel", "Octo.SharedKernel\Octo.SharedKernel.csproj", "{8367C298-143C-402E-A4E0-A40D97487917}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{AEAE0711-004A-4269-8504-FAA20ECF8FA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEAE0711-004A-4269-8504-FAA20ECF8FA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEAE0711-004A-4269-8504-FAA20ECF8FA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8367C298-143C-402E-A4E0-A40D97487917}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8367C298-143C-402E-A4E0-A40D97487917}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8367C298-143C-402E-A4E0-A40D97487917}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8367C298-143C-402E-A4E0-A40D97487917}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
