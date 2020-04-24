@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Octo.Infrastructure.Data;
 
 namespace Octo.Web
 {
@@ -7,7 +8,7 @@ namespace Octo.Web
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            CreateHostBuilder(args).Build().MigrateDatabase<OctoContext>().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
