@@ -5,8 +5,7 @@ services:
         image: postgres
         environment:
             POSTGRES_PASSWORD: laikinas
-        volumes: 
-           # - ./postgres-data:/var/lib/postgresql/data linux
+        volumes:
             - postgresql-volume:/var/lib/postgresql/data
         restart: always
         ports: 
@@ -15,11 +14,10 @@ services:
     webapp:
         depends_on: 
             - db
-        build: 
-            context: .
         image: edsdck/octoroperty:latest
         ports: 
             - "8080:80"
+            - "8081:443"
 
 volumes:
     postgresql-volume:
