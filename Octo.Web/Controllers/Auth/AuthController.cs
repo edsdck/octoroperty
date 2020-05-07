@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Octo.Core.Entities;
 using Octo.Core.Factories;
-using Octo.Infrastructure.Data;
 using Octo.Web.Filters;
 
 namespace Octo.Web.Controllers.Auth

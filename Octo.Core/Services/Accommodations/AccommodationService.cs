@@ -1,12 +1,25 @@
+using System.Threading.Tasks;
 using Octo.Core.Entities;
+using Octo.SharedKernel.Interfaces;
 
 namespace Octo.Core.Services.Accommodations
 {
     public class AccommodationService : IAccommodationService
     {
-        public Accommodation Create()
+        private readonly IAsyncRepository<Accommodation> _repository;
+
+        public AccommodationService(IAsyncRepository<Accommodation> repository)
         {
-            throw new System.NotImplementedException();
+            _repository = repository;
+        }
+
+        public async Task<Accommodation> Create(string userId, Accommodation accommodation)
+        {
+            accommodation.OwnerId = userId;
+
+            await _repository.AddAsync(accommodation);
+
+            return accommodation;
         }
     }
 }

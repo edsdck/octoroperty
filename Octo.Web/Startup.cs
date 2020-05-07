@@ -13,7 +13,9 @@ using Microsoft.OpenApi.Models;
 using Octo.Core;
 using Octo.Core.Entities;
 using Octo.Core.Factories;
+using Octo.Core.Services.Accommodations;
 using Octo.Infrastructure.Data;
+using Octo.SharedKernel.Interfaces;
 
 namespace Octo.Web
 {
@@ -57,6 +59,8 @@ namespace Octo.Web
             
             services.Configure<IdentitySettings>(Configuration.GetSection("IdentityOptions"));
             services.AddScoped<IJwtFactory, JwtFactory>();
+            services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
+            services.AddScoped<IAccommodationService, AccommodationService>();
 
             services.AddControllers();
             

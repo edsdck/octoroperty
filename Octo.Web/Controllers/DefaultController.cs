@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Octo.Web.Controllers
 {
@@ -6,5 +7,9 @@ namespace Octo.Web.Controllers
     [ApiController]
     public class DefaultController : ControllerBase
     {
+        protected string GetUserId()
+        {
+            return User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        }
     }
 }
