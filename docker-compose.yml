@@ -10,7 +10,8 @@ services:
         restart: always
         ports: 
             - "5432:5432"
-        network_mode: "host"
+        extra_hosts:
+        - "localhost:192.168.65.2"
 
     webapp:
         depends_on: 
