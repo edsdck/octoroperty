@@ -1,7 +1,9 @@
-﻿namespace Octo.Core.Factories
+﻿using Octo.Core.Entities;
+
+namespace Octo.Core.Factories
 {
     public interface IJwtFactory
     {
-        string GenerateJwtToken();
+        string GenerateJwtToken(OctoUser user);
     }
 }

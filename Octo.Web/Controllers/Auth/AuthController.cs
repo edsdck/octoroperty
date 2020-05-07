@@ -48,7 +48,7 @@ namespace Octo.Web.Controllers.Auth
                 return Unauthorized();
             }
 
-            var jwtToken = _jwtFactory.GenerateJwtToken();
+            var jwtToken = _jwtFactory.GenerateJwtToken(user);
 
             return Ok(jwtToken);
         }
