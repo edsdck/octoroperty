@@ -47,5 +47,7 @@ namespace Octo.Infrastructure.Data
             _context.Set<T>().Remove(entity);
             await _context.SaveChangesAsync();
         }
+
+        public DbSet<T> Table => _context.Set<T>();
     }
 }
