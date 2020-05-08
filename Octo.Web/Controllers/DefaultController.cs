@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Octo.Web.Controllers
 {
-    [Route("api/[controller]/")]
+    [Route("v1/api/[controller]/")]
     [ApiController]
     public class DefaultController : ControllerBase
     {
